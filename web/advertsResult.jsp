@@ -10,12 +10,30 @@
 
 <html>
 <head>
-    <title>Adverts Results</title>
+    <title>advertsResult</title>
 </head>
 <body>
+    <div> <a href="/login">Login</a> <a href="/register">Register</a> </div>
     <c:choose>
         <c:when test="${not empty adverts}">
-            Not empty
+            <table>
+                <thead>
+                    <tr>
+                        <th>Aprašymas</th>
+                        <th>Miestas</th>
+                        <th>Kaina</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach items="${adverts}" var="advert">
+                        <tr>
+                            <td><a href="/advertDetailed?id=${advert.id}"> ${advert.shortDescription}</a></td>
+                            <td>${advert.city}</td>
+                            <td>${advert.price}</td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
         </c:when>
         <c:otherwise>
             <code>"adverts" is empty</code>

@@ -15,9 +15,11 @@ public class Advert {
     private Date activeUntil;
     private String email;
     private String phone;
-    private String short_description;
+    private String shortDescription;
 
-    public Advert(int id, BigDecimal price, String description, Date insertTime, String city, Date activeUntil, String email, String phone, String short_description) {
+    public Advert (){}
+
+    public Advert(int id, BigDecimal price, String description, Date insertTime, String city, Date activeUntil, String email, String phone, String shortDescription) {
         this.id = id;
         this.price = price;
         this.description = description;
@@ -26,10 +28,10 @@ public class Advert {
         this.activeUntil = activeUntil;
         this.email = email;
         this.phone = phone;
-        this.short_description = short_description;
+        this.shortDescription = shortDescription;
     }
 
-    public Advert(BigDecimal price, String description, Date insertTime, String city, Date activeUntil, String email, String phone, String short_description) {
+    public Advert(BigDecimal price, String description, Date insertTime, String city, Date activeUntil, String email, String phone, String shortDescription) {
         this.price = price;
         this.description = description;
         this.insertTime = insertTime;
@@ -37,7 +39,7 @@ public class Advert {
         this.activeUntil = activeUntil;
         this.email = email;
         this.phone = phone;
-        this.short_description = short_description;
+        this.shortDescription = shortDescription;
     }
 
     public int getId() {
@@ -72,7 +74,43 @@ public class Advert {
         return phone;
     }
 
-    public String getShort_description() {
-        return short_description;
+    public String getShortDescription() {
+        return shortDescription;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setInsertTime(Date insertTime) {
+        this.insertTime = insertTime;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setActiveUntil(Date activeUntil) {
+        this.activeUntil = activeUntil;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setShortDescription(String shortDescription) {
+        this.shortDescription = shortDescription;
     }
 }

@@ -3,11 +3,9 @@ package com.kcs.auto.adverts.service.impl;
 import com.kcs.auto.adverts.service.AdvertsService;
 import com.kcs.auto.adverts.service.ConnectionService;
 import com.kcs.auto.adverts.vo.Advert;
+import com.sun.istack.internal.Nullable;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,11 +28,7 @@ public class AdvertsServiceImpl implements AdvertsService {
                 ResultSet resultSet = statement.executeQuery("SELECT * FROM adverts");
 
                 while (resultSet.next()){
-                    Advert advert = new Advert(resultSet.getInt("ID"), resultSet.getBigDecimal("PRICE"),
-                            resultSet.getString("DESCRIPTION"), resultSet.getDate("INSERT_TIME"),
-                            resultSet.getString("CITY"), resultSet.getDate("ACTIVE_UNTIL"),
-                            resultSet.getString("EMAIL"), resultSet.getString("PHONE"),
-                            resultSet.getString("SHORT_DESCRIPTION"));
+                    Advert advert = getAdvertFromResultSet(resultSet);
                     adverts.add(advert);
                 }
 
@@ -44,6 +38,51 @@ public class AdvertsServiceImpl implements AdvertsService {
         }
 
         return adverts;
+
+    }
+
+    @Override
+    public Advert getAdvert(int advertId) {
+        Advert advert = new Advert();
+
+        ConnectionService connectionService = new ConnectionServiceImpl();
+
+        Connection connection = connectionService.createConnection();
+
+        if (connection != null){
+            try {
+                PreparedStatement statement = connection.prepareStatement("SELECT * FROM adverts WHERE id = ?");
+                statement.setInt(1, advertId);
+
+                ResultSet resultSet = statement.executeQuery();
+
+                if(resultSet.next()) {
+                    advert = getAdvertFromResultSet(resultSet);
+                }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return advert;
+    }
+
+    @Nullable
+    private Advert getAdvertFromResultSet(ResultSet resultSet){
+        Advert advert = null;
+
+        try {
+            advert = new Advert(resultSet.getInt("ID"), resultSet.getBigDecimal("PRICE"),
+                    resultSet.getString("DESCRIPTION"), resultSet.getDate("INSERT_TIME"),
+                    resultSet.getString("CITY"), resultSet.getDate("ACTIVE_UNTIL"),
+                    resultSet.getString("EMAIL"), resultSet.getString("PHONE"),
+                    resultSet.getString("SHORT_DESCRIPTION"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return advert;
 
     }
 }
